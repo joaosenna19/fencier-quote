@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Business Logic for Quote Calculation
 
-## Getting Started
+Get Constructor’s Journey for Quote Generation
+Available Materials
 
-First, run the development server:
+How often do you add/remove materials?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+When you have a new type of material or fence, such as an 8' section of white full privacy (see picture), how often do you add or remove materials?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+How does the process of acquiring materials work? Are they always available?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+If you have a yard to stock materials, you have more control over prices. If not, you need to get a quote from your supplier to update the quote. Some materials are harder to find on the shelf. Delivery time is something the fence contractor must predict before accepting the job. It is important to note that the quote is a rough estimate and may need adjustments.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+How do you calculate the cost of materials (including labor costs)?
 
-## Learn More
+The calculation is as follows:
+\text{Time to build the section (h)} \times \text{Number of laborers (quantity)} \times \text{Labor cost [wage (CAD/hr) + other costs (WCB, insurance, etc.)]} \times \text{Overhead (%)}
 
-To learn more about Next.js, take a look at the following resources:
+Do materials affect the price of one another (e.g., is painting a wood fence white more expensive than a vinyl one)?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Yes. For example, painting with gold would be more expensive.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Do materials change the labor cost?
 
-## Deploy on Vercel
+Yes. Each section (normally 8' length) of any type of fence should have its own labor calculation, with variables being time and markup.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+How important is the ability to change the price of these materials?
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+It is fundamental. If the price from any supplier changes, you must update the cost price in the software immediately to avoid any loss in future projects.
+
+How often does this happen?
+
+Every time there is a price change from the supplier.
+Quote
+
+Split material cost and labor cost?
+
+Yes. Use the variables provided.
+
+What information from the prospect do you need?
+
+You need the following information: address, name, email, and phone number. Following the same idea as the salesman, a printout can be sent.
+
+Do you see value in generating a PDF for your customer to keep as a record?
+
+Yes, it can be a PDF with the map and the quote, or just an email with the map or prices.
+
+Do prices fluctuate? Do quotes need an expiration date (e.g., for how long do you honor these quotes)?
+
+Prices fluctuate but not like gasoline. An expiration date is important and can be added as optional.
+
+How do you calculate margins? Would you rather price things higher and then offer discounts, or provide the cheapest possible from the start?
+
+This does not affect the project. Just add a markup to the material.
+Portal
+
+Do you currently use any type of sales management tool? Do you know what the industry standard is?
+
+No.
+
+Do you see the value of having such a tool?
+
+Any tool that facilitates the entrepreneur's life is valuable, especially for reducing time management or optimizing processes.
