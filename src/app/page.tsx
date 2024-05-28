@@ -1,7 +1,6 @@
 import Link from "next/link"
 import constructorLogo from "/icons/constructor-logo.png"
 import Image from "next/image"
-import { BreadcrumbLink, BreadcrumbItem, BreadcrumbSeparator, BreadcrumbPage, BreadcrumbList, Breadcrumb } from "@/components/ui/breadcrumb"
 import QuoteProgress from "@/components/QuoteProgress"
 
 import QuoteForm from "@/components/QuoteForm"
@@ -44,21 +43,6 @@ export default function Component() {
         </nav>
       </header>
       <div className="container mx-auto py-8">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/quote">Quote</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Step 1</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-3">
         <QuoteForm />
           <QuoteProgress />
