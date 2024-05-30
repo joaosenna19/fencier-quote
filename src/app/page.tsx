@@ -2,50 +2,25 @@ import Link from "next/link"
 import constructorLogo from "/icons/constructor-logo.png"
 import Image from "next/image"
 import QuoteProgress from "@/components/QuoteProgress"
+import Header from "@/components/Header"
+import AddressInput from "@/components/AddressInput"
+import OptionSelection from "@/components/OptionSelection"
 
 import QuoteForm from "@/components/QuoteForm"
 
 export default function Component() {
   return (
     <>
-      <header className="flex items-center justify-between px-6 py-4 shadow">
-        <Link className="flex items-center gap-2" href="#">
-        <Image 
-                className='w-24 h-24 p-2'
-                src={constructorLogo} 
-                alt='icon' 
-            />
-          <span className="text-lg font-semibold">Acme Inc</span>
-        </Link>
-        <nav>
-          <ul className="flex items-center gap-4">
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Pricing
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <div className="container mx-auto py-8">
-        <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-3">
+      <Header />
+      <div className="flex">
+        <div className="flex-column gap-2">
+        <QuoteProgress />
         <QuoteForm />
-          <QuoteProgress />
+        <AddressInput />
+        <div className="grid grid-cols-1 bg-gray-500">
+          Map Area
+        </div>
+        <OptionSelection />
         </div>
       </div>
       
