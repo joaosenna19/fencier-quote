@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { CarouselItem, CarouselContent, CarouselPrevious, CarouselNext, Carousel } from "@/components/ui/carousel"
-import ItemCard from "@/components/ItemCard"
+import ItemCard from "./ItemCard"
 
 export default function OptionSelection() {
   return (

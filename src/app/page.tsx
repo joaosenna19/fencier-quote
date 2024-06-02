@@ -12,8 +12,8 @@ export default function Component() {
   return (
     <>
       <Header />
-      <div className="flex">
-        <div className="flex-column gap-2">
+      <div className="flex flex-col">
+        <div className="flex-row gap-2">
         <QuoteProgress />
         <QuoteForm />
         <AddressInput />
