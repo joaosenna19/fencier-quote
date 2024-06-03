@@ -9,7 +9,7 @@ function QuoteProgress() {
             <div className="mt-6 space-y-4">
               <QuoteStep 
               stepName='Contact Information' 
-              isActive = {false}
+              isActive = {true}
               isCompleted = {false}
               />
               <QuoteStep 

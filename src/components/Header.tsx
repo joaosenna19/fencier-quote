@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import Image from 'next/image'
 import constructorLogo from "/icons/constructor-logo.png"
@@ -16,26 +18,6 @@ function Header() {
         </Link>
         <nav>
           <ul className="flex items-center gap-4">
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Pricing
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Contact
-              </Link>
-            </li>
           </ul>
         </nav>
       </header>
