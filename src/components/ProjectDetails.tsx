@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 function ProjectDetails(
   props: {
     isActive : boolean
+    onClickNext: (nextStep: string) => void;
   }
 ) {
 
@@ -40,7 +41,10 @@ function ProjectDetails(
         <Label htmlFor="project-description">Project Details</Label>
         <Textarea id="project-description" placeholder="Give us a brief idea of what your dream fence looks like" rows={3} />
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+      <Button className="w-full sm:w-auto" variant="outline">
+            Previous Step
+          </Button>
         <Button className="ml-auto" type="submit">
           Next Step
         </Button>

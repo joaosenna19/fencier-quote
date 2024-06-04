@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import constructorLogo from "/icons/constructor-logo.png"
+import constructorLogo from "/icons/rio-fence.jpeg"
 import Link from 'next/link'
 
 function Header() {
@@ -14,7 +14,7 @@ function Header() {
                 src={constructorLogo} 
                 alt='icon' 
             />
-          <span className="text-lg font-semibold">Acme Inc</span>
+          <span className="text-lg font-semibold">Rio Fence Company</span>
         </Link>
         <nav>
           <ul className="flex items-center gap-4">
