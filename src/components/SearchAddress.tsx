@@ -1,7 +1,19 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-export default function AddressInput() {
+export default function AddressInput(
+  props: {
+    isActive : boolean
+  }
+) 
+{
+
+  const isActive = props.isActive
+
+  if(!isActive) {
+    return null;
+  }
+
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white border border-gray-300 rounded-md shadow-sm">
       <h2 className="text-lg font-semibold">Step 2: Address Details</h2>

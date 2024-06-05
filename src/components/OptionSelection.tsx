@@ -1,8 +1,17 @@
 import Link from "next/link"
 import { CarouselItem, CarouselContent, CarouselPrevious, CarouselNext, Carousel } from "@/components/ui/carousel"
-import ItemCard from "@/components/ItemCard"
+import ItemCard from "./ItemCard"
 
-export default function OptionSelection() {
+export default function OptionSelection(
+  props: {
+    isActive : boolean
+  }
+) {
+
+  const isActive = props.isActive
+  if(!isActive){
+    return null
+  }
   return (
     <section className="w-full py-12 md:py-16 lg:py-20">
       <div className="container px-4 md:px-6">

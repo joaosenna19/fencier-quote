@@ -1,6 +1,8 @@
+"use client"
+
 import React from 'react'
 import Image from 'next/image'
-import constructorLogo from "/icons/constructor-logo.png"
+import constructorLogo from "/icons/rio-fence.jpeg"
 import Link from 'next/link'
 
 function Header() {
@@ -12,30 +14,10 @@ function Header() {
                 src={constructorLogo} 
                 alt='icon' 
             />
-          <span className="text-lg font-semibold">Acme Inc</span>
+          <span className="text-lg font-semibold">Rio Fence Company</span>
         </Link>
         <nav>
           <ul className="flex items-center gap-4">
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Pricing
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link className="text-sm font-medium hover:underline" href="#">
-                Contact
-              </Link>
-            </li>
           </ul>
         </nav>
       </header>
