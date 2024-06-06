@@ -1,16 +1,19 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-export default function AddressInput(
-  props: {
-    isActive : boolean
-  }
-) 
-{
+interface StepDetails {
+  isActive: boolean;
+  onClickNext: (nextStep: string) => void;
+}
 
-  const isActive = props.isActive
+export default function AddressInput(props: StepDetails) {
+  const handleNext = () => {
+    props.onClickNext("GoogleMaps");
+  };
 
-  if(!isActive) {
+  const isActive = props.isActive;
+
+  if (!isActive) {
     return null;
   }
 
@@ -22,14 +25,18 @@ export default function AddressInput(
       </p>
       <form className="mt-6 grid gap-6">
         <div>
-          <label className="text-sm font-medium text-gray-700" htmlFor="address">
+          <label
+            className="text-sm font-medium text-gray-700"
+            htmlFor="address"
+          >
             Address
           </label>
           <div className="relative">
-            <Input className="pr-10" id="address" placeholder="Enter your address" />
-            <Button className="absolute right-2 top-1/2 -translate-y-1/2" size="icon" type="button">
-              <SearchIcon className="h-5 w-5 text-gray-500" />
-            </Button>
+            <Input
+              className="pr-10"
+              id="address"
+              placeholder="Enter your address"
+            />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-6">
@@ -40,7 +47,10 @@ export default function AddressInput(
             <Input id="city" placeholder="City" />
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-700" htmlFor="state">
+            <label
+              className="text-sm font-medium text-gray-700"
+              htmlFor="state"
+            >
               State
             </label>
             <Input id="state" placeholder="State" />
@@ -48,13 +58,19 @@ export default function AddressInput(
         </div>
         <div className="grid grid-cols-2 gap-6">
           <div>
-            <label className="text-sm font-medium text-gray-700" htmlFor="zip-code">
+            <label
+              className="text-sm font-medium text-gray-700"
+              htmlFor="zip-code"
+            >
               Zip Code
             </label>
             <Input id="zip-code" placeholder="Zip Code" />
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-700" htmlFor="country">
+            <label
+              className="text-sm font-medium text-gray-700"
+              htmlFor="country"
+            >
               Country
             </label>
             <Input id="country" placeholder="Country" />
@@ -64,28 +80,11 @@ export default function AddressInput(
           <Button className="w-full sm:w-auto" variant="outline">
             Previous Step
           </Button>
-          <Button className="w-full sm:w-auto">Next Step</Button>
+          <Button className="w-full sm:w-auto" onClick={handleNext}>
+            Next Step
+          </Button>
         </div>
       </form>
     </div>
-  )
-}
-
-function SearchIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  )
+  );
 }
