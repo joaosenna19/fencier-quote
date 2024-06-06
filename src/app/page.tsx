@@ -15,6 +15,13 @@ export default function Component() {
     setActiveComponent(nextStep);
   };
 
+  const [quote, setQuote] = useState([]);
+
+  const handleQuote = (quote: any) => {
+    setQuote(quote);
+    console.log("I'm here", JSON.stringify(quote));
+  };
+
   return (
     <>
       <Header />
@@ -24,18 +31,26 @@ export default function Component() {
           <ProjectDetails
             isActive={activeComponent === "ProjectDetails"}
             onClickNext={handleNext}
+            quote={quote}
+            onQuote={handleQuote}
           />
           <SearchAddress
             isActive={activeComponent === "SearchAddress"}
             onClickNext={handleNext}
+            quote={quote}
+            onQuote={handleQuote}
           />
           <GoogleMaps
             isActive={activeComponent === "GoogleMaps"}
             onClickNext={handleNext}
+            quote={quote}
+            onQuote={handleQuote}
           />
           <MaterialSelection
             isActive={activeComponent === "MaterialSelection"}
             onClickNext={handleNext}
+            quote={quote}
+            onQuote={handleQuote}
           />
         </div>
       </div>
