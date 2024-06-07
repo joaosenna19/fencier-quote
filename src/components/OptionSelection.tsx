@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {
-  CarouselContent,
-  CarouselPrevious,
-  CarouselNext,
-  Carousel,
-} from "@/components/ui/carousel";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { StepDetails } from "@/interfaces/step-details";
+import { Card, CardContent, CardTitle, CardHeader } from "./ui/card";
+import Image from "next/image";
 
 interface Material {
   id: string;
@@ -23,6 +19,11 @@ interface Material {
 
 export default function OptionSelection(props: StepDetails) {
   const [materials, setMaterials] = useState<Material[]>([]);
+  const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(
+    null
+  );
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -44,17 +45,20 @@ export default function OptionSelection(props: StepDetails) {
     fetchMaterials();
   }, []);
 
-  const handlePrevious = () => {
-    // Placeholder function for navigating to the previous item
-    console.log("Navigating to previous item");
-  };
-
-  const handleNext = () => {
-    // Placeholder function for navigating to the next item
-    console.log("Navigating to next item");
-  };
-
   const isActive = props.isActive;
+
+  const handleMaterialSelect = (material: Material) => {
+    setSelectedMaterial(material);
+    setSelectedStyle(null);
+  };
+
+  const handleStyleSelect = (styleId: string) => {
+    setSelectedStyle(styleId);
+  };
+
+  const handleColorSelect = (colorId: string) => {
+    setSelectedColor(colorId);
+  };
 
   if (!isActive) {
     return null;
@@ -74,109 +78,115 @@ export default function OptionSelection(props: StepDetails) {
             </p>
           </div>
           <div className="flex flex-col gap-6 md:gap-8 lg:gap-12">
-            {materials.map((material) => (
-              <div key={material.id}>
-                {/* Carousel and content for each material */}
-                <h2 className="text-xl font-semibold tracking-tight md:text-2xl lg:text-3xl">
-                  {material.name}
-                </h2>
-                <Carousel className="w-full">
-                  <CarouselContent>
-                    {/* Content for each style */}
-                    {material.styles.map((style) => (
-                      <div key={style.id}>
-                        <h3 className="text-lg font-semibold">{style.name}</h3>
-                        <Carousel className="w-full">
-                          <CarouselContent>
-                            {/* Content for each color */}
-                            {style.colors.map((color) => (
-                              <div key={color.id}>
-                                <p>{color.name}</p>
-                              </div>
-                            ))}
-                          </CarouselContent>
-                          <CarouselPrevious
-                            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                            onClick={handlePrevious}
-                          >
-                            {/* Left arrow icon */}
-                          </CarouselPrevious>
-                          <CarouselNext
-                            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                            onClick={handleNext}
-                          >
-                            {/* Right arrow icon */}
-                          </CarouselNext>
-                        </Carousel>
-                      </div>
+            <h3 className="text-gray-500 font-semibold dark:text-gray-400 md:text-lg lg:text-xl">
+              Choose the material
+            </h3>
+            <div className="flex justify-around">
+              {materials.map((material) => (
+                <Card
+                  className={`w-[350px] m-2 ${
+                    selectedMaterial?.id === material.id
+                      ? "border-2 border-blue-500"
+                      : ""
+                  }`}
+                  key={material.id}
+                  onClick={() => handleMaterialSelect(material)}
+                >
+                  <CardHeader>
+                    <CardTitle className="text-center">
+                      {material.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex">
+                    <Image
+                      src="/public/images.png"
+                      alt=""
+                      width="100"
+                      height="50"
+                    />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            {selectedMaterial && (
+              <>
+                <h3 className="text-gray-500 font-semibold dark:text-gray-400 md:text-lg lg:text-xl">
+                  Choose the style
+                </h3>
+                <div className="flex justify-around">
+                  {selectedMaterial.styles.map((style) => (
+                    <Card
+                      key={style.id}
+                      className={`w-[350px] m-2 ${
+                        selectedStyle === style.id
+                          ? "border-2 border-blue-500"
+                          : ""
+                      }`}
+                      onClick={() => handleStyleSelect(style.id)}
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-center">
+                          {style.name}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="flex">
+                        <Image
+                          src="/public/images.png"
+                          alt=""
+                          width="100"
+                          height="50"
+                        />
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </>
+            )}
+            {selectedMaterial && selectedStyle && (
+              <>
+                <h3 className="text-gray-500 font-semibold dark:text-gray-400 md:text-lg lg:text-xl">
+                  Choose the color
+                </h3>
+                <div className="flex justify-around">
+                  {selectedMaterial.styles
+                    .find((style) => style.id === selectedStyle)
+                    ?.colors.map((color) => (
+                      <Card
+                        key={color.id}
+                        className={`w-[350px] m-2 ${
+                          selectedColor === color.id
+                            ? "border-2 border-blue-500"
+                            : ""
+                        }`}
+                        onClick={() => handleColorSelect(color.id)}
+                      >
+                        <CardHeader>
+                          <CardTitle className="text-center">
+                            {color.name}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex">
+                          <Image
+                            src="/public/images.png"
+                            alt=""
+                            width="100"
+                            height="50"
+                          />
+                        </CardContent>
+                      </Card>
                     ))}
-                  </CarouselContent>
-                  <CarouselPrevious
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                    onClick={handlePrevious}
-                  >
-                    {/* Left arrow icon */}
-                  </CarouselPrevious>
-                  <CarouselNext
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                    onClick={handleNext}
-                  >
-                    {/* Right arrow icon */}
-                  </CarouselNext>
-                </Carousel>
-              </div>
-            ))}
+                </div>
+              </>
+            )}
           </div>
           <div className="flex justify-between">
             <Button className="w-full sm:w-auto" variant="outline">
               Previous Step
             </Button>
-            <Button className="w-full sm:w-auto" onClick={handleNext}>
-              Next Step
-            </Button>
+            <Button className="w-full sm:w-auto">Next Step</Button>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function ArrowLeftIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m12 19-7-7 7-7" />
-      <path d="M19 12H5" />
-    </svg>
-  );
-}
-
-function ArrowRightIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
   );
 }
