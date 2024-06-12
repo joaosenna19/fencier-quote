@@ -10,18 +10,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 function GoogleMaps(props: StepDetails) {
   const googleMapsSchema = zod.object({
     length: zod.number().min(1, { message: "Length is mandatory" }),
-    gates: zod.number().min(0, { message: "Gates is mandatory" }),
+    singleGate: zod.boolean(),
   });
 
   type GoogleMaps = zod.infer<typeof googleMapsSchema>;
 
   const onSubmit: SubmitHandler<GoogleMaps> = (data) => {
+    setValue("singleGate", data.singleGate);
     props.onQuote([...props.quote, data]);
     props.onClickNext("MaterialSelection");
   };
 
-  const { register, handleSubmit, formState } = useForm<GoogleMaps>({
+  const { register, handleSubmit, formState, setValue } = useForm<GoogleMaps>({
     resolver: zodResolver(googleMapsSchema),
+    defaultValues: {
+      singleGate: true,
+    },
   });
 
   const isActive = props.isActive;
@@ -48,14 +52,14 @@ function GoogleMaps(props: StepDetails) {
           {formState.errors.length && (
             <p className="text-red-500">{formState.errors.length.message}</p>
           )}
-          <Label>How many gates would you like to have?</Label>
+          {/* <Label>How many gates would you like to have?</Label>
           <Input
             {...register("gates", { valueAsNumber: true })}
             type="number"
           />
           {formState.errors.gates && (
             <p className="text-red-500">{formState.errors.gates.message}</p>
-          )}
+          )} */}
           <div className="flex justify-between m-4">
             <Button className="w-full sm:w-auto" variant="outline">
               Previous Step

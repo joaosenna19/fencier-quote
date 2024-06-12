@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { StepDetails } from "@/interfaces/step-details";
 import { Card, CardContent, CardTitle, CardHeader } from "./ui/card";
 import Image from "next/image";
+import { createQuote } from "@/apiFunctions/create-quote";
+import { IncomingQuote } from "@/apiFunctions/create-quote";
 
 interface Material {
   id: string;
@@ -13,6 +15,10 @@ interface Material {
     colors: {
       id: string;
       name: string;
+      heights: {
+        id: string;
+        feet: string;
+      }[];
     }[];
   }[];
 }
@@ -24,6 +30,7 @@ export default function OptionSelection(props: StepDetails) {
   );
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedHeight, setSelectedHeight] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -50,14 +57,44 @@ export default function OptionSelection(props: StepDetails) {
   const handleMaterialSelect = (material: Material) => {
     setSelectedMaterial(material);
     setSelectedStyle(null);
+    setSelectedColor(null);
+    setSelectedHeight(null);
   };
 
   const handleStyleSelect = (styleId: string) => {
     setSelectedStyle(styleId);
+    setSelectedColor(null);
+    setSelectedHeight(null);
   };
 
   const handleColorSelect = (colorId: string) => {
     setSelectedColor(colorId);
+    setSelectedHeight(null);
+  };
+
+  const handleHeightSelect = (heightId: string) => {
+    setSelectedHeight(heightId);
+  };
+
+  const handleNextStep = () => {
+    if (selectedMaterial && selectedStyle && selectedColor && selectedHeight) {
+      const [userInfo, addressInfo, details] = props.quote;
+      const tenantId = "aa815619-4db7-4b79-a33f-9b51426db757";
+      const quote: IncomingQuote = [userInfo, addressInfo, details];
+
+      createQuote(
+        quote,
+        selectedMaterial.id,
+        selectedStyle,
+        selectedColor,
+        selectedHeight,
+        tenantId
+      );
+    } else {
+      console.error(
+        "All selections must be made before proceeding to the next step."
+      );
+    }
   };
 
   if (!isActive) {
@@ -97,13 +134,8 @@ export default function OptionSelection(props: StepDetails) {
                       {material.name}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="flex">
-                    <Image
-                      src="/public/images.png"
-                      alt=""
-                      width="100"
-                      height="50"
-                    />
+                  <CardContent className="flex justify-center">
+                    <Image src="/images.png" alt="" width="100" height="50" />
                   </CardContent>
                 </Card>
               ))}
@@ -129,9 +161,9 @@ export default function OptionSelection(props: StepDetails) {
                           {style.name}
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="flex">
+                      <CardContent className="flex justify-center">
                         <Image
-                          src="/public/images.png"
+                          src="/images.png"
                           alt=""
                           width="100"
                           height="50"
@@ -165,9 +197,46 @@ export default function OptionSelection(props: StepDetails) {
                             {color.name}
                           </CardTitle>
                         </CardHeader>
-                        <CardContent className="flex">
+                        <CardContent className="flex justify-center">
                           <Image
-                            src="/public/images.png"
+                            src="/images.png"
+                            alt=""
+                            width="100"
+                            height="50"
+                          />
+                        </CardContent>
+                      </Card>
+                    ))}
+                </div>
+              </>
+            )}
+            {selectedMaterial && selectedStyle && selectedColor && (
+              <>
+                <h3 className="text-gray-500 font-semibold dark:text-gray-400 md:text-lg lg:text-xl">
+                  Choose the height
+                </h3>
+                <div className="flex justify-around">
+                  {selectedMaterial.styles
+                    .find((style) => style.id === selectedStyle)
+                    ?.colors.find((color) => color.id === selectedColor)
+                    ?.heights.map((height) => (
+                      <Card
+                        key={height.id}
+                        className={`w-[350px] m-2 ${
+                          selectedHeight === height.id
+                            ? "border-2 border-blue-500"
+                            : ""
+                        }`}
+                        onClick={() => handleHeightSelect(height.id)}
+                      >
+                        <CardHeader>
+                          <CardTitle className="text-center">
+                            {height.feet} ft
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex justify-center">
+                          <Image
+                            src="/images.png"
                             alt=""
                             width="100"
                             height="50"
@@ -183,7 +252,9 @@ export default function OptionSelection(props: StepDetails) {
             <Button className="w-full sm:w-auto" variant="outline">
               Previous Step
             </Button>
-            <Button className="w-full sm:w-auto">Next Step</Button>
+            <Button className="w-full sm:w-auto" onClick={handleNextStep}>
+              Next Step
+            </Button>
           </div>
         </div>
       </div>
