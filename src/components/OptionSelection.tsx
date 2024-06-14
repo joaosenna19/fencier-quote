@@ -5,23 +5,8 @@ import { Card, CardContent, CardTitle, CardHeader } from "./ui/card";
 import Image from "next/image";
 import { createQuote } from "@/apiFunctions/create-quote";
 import { IncomingQuote } from "@/apiFunctions/create-quote";
-
-interface Material {
-  id: string;
-  name: string;
-  styles: {
-    id: string;
-    name: string;
-    colors: {
-      id: string;
-      name: string;
-      heights: {
-        id: string;
-        feet: string;
-      }[];
-    }[];
-  }[];
-}
+import { Material } from "@/interfaces/material";
+import { fetchMaterials } from "@/apiFunctions/fetchMaterials";
 
 export default function OptionSelection(props: StepDetails) {
   const [materials, setMaterials] = useState<Material[]>([]);
@@ -31,26 +16,16 @@ export default function OptionSelection(props: StepDetails) {
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedHeight, setSelectedHeight] = useState<string | null>(null);
+  
 
   useEffect(() => {
-    const fetchMaterials = async () => {
-      try {
-        const response = await fetch(
-          "https://fencier-api.onrender.com/material"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch materials");
-        }
-        const data = await response.json();
-        setMaterials(data);
-        console.log("Materials:", data);
-      } catch (error) {
-        console.error("Error fetching materials:", error);
-      }
-    };
-
-    fetchMaterials();
-  }, []);
+    const data = fetchMaterials();
+    data.then((materials) => {
+      setMaterials(materials);
+    });
+      
+    }, []);
+  
 
   const isActive = props.isActive;
 
@@ -76,13 +51,13 @@ export default function OptionSelection(props: StepDetails) {
     setSelectedHeight(heightId);
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     if (selectedMaterial && selectedStyle && selectedColor && selectedHeight) {
       const [userInfo, addressInfo, details] = props.quote;
       const tenantId = "aa815619-4db7-4b79-a33f-9b51426db757";
       const quote: IncomingQuote = [userInfo, addressInfo, details];
-
-      createQuote(
+      console.log("Quote", "I'm here");
+      const createdQuote = await createQuote(
         quote,
         selectedMaterial.id,
         selectedStyle,
@@ -90,7 +65,10 @@ export default function OptionSelection(props: StepDetails) {
         selectedHeight,
         tenantId
       );
-    } else {
+      props.onQuote(createdQuote);
+      console.log("Created Quote", createdQuote);
+      props.onClickNext("QuoteSummary");
+      } else {
       console.error(
         "All selections must be made before proceeding to the next step."
       );

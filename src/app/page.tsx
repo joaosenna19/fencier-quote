@@ -7,6 +7,7 @@ import ProjectDetails from "@/components/ProjectDetails";
 import MaterialSelection from "@/components/OptionSelection";
 import SearchAddress from "@/components/SearchAddress";
 import GoogleMaps from "@/components/GoogleMaps";
+import QuoteSummary from "@/components/QuoteSummary";
 
 export default function Component() {
   const [activeComponent, setActiveComponent] = useState("ProjectDetails");
@@ -15,7 +16,7 @@ export default function Component() {
     setActiveComponent(nextStep);
   };
 
-  const [quote, setQuote] = useState([]);
+  const [quote, setQuote] = useState([] || {});
 
   const handleQuote = (quote: any) => {
     setQuote(quote);
@@ -26,7 +27,7 @@ export default function Component() {
     <>
       <Header />
       <div className="flex flex-col">
-        <div className="flex flex-row my-10 ml-6 gap-10">
+        <div className="flex flex-col md:flex-row my-10 ml-6 gap-10">
           <QuoteProgress />
           <ProjectDetails
             isActive={activeComponent === "ProjectDetails"}
@@ -51,6 +52,10 @@ export default function Component() {
             onClickNext={handleNext}
             quote={quote}
             onQuote={handleQuote}
+          />
+          <QuoteSummary
+            isActive={activeComponent === "QuoteSummary"}
+            quote={quote}
           />
         </div>
       </div>
