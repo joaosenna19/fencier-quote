@@ -6,12 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 
 interface QuoteSummaryProps {
-    quote: any;
-    isActive: boolean;
-  }
+  quote: any;
+  isActive: boolean;
+}
 
 export default function QuoteSummary(props: QuoteSummaryProps) {
   const { quote, isActive } = props;
@@ -21,36 +20,34 @@ export default function QuoteSummary(props: QuoteSummaryProps) {
   }
 
   return (
-    <div className="col-span-2 rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-      <Card className={cn("w-[380px]")}>
-        <CardHeader>
-          <CardTitle>Your Quote Summary</CardTitle>
-          <CardDescription>Here are the details of your quote</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className=" flex items-center space-x-4 rounded-md border p-4">
-            <p className="text-sm font-medium leading-none">
-              Final price:{" "}
-              <span className="text-lg font-bold">${quote.finalPrice}</span>
-            </p>
-            <p className="text-sm font-medium leading-none">
-              Total feet:{" "}
-              <span className="text-lg font-bold">{quote.feet}ft</span>
-            </p>
-            <p className="text-sm font-medium leading-none">
-              Gate:{" "}
-              <span className="text-lg font-bold">
-                {quote.singleGate ? "Single" : "Double"}
-              </span>
-            </p>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <p className="text-sm font-medium leading-none">
-            Our team will contact you soon!
+    <Card className="col-span-2 w-full rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+      <CardHeader className="">
+        <CardTitle>Your Quote Summary</CardTitle>
+        <CardDescription>Here are the details of your quote</CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4 ">
+        <div className=" flex rounded-md border p-4 flex-col">
+          <p className="text-sm font-medium leading-none flex flex-col mb-3">
+            Final price:
+            <span className="text-3xl font-bold mt-2">${quote.finalPrice}</span>
           </p>
-        </CardFooter>
-      </Card>
-    </div>
+          <p className="text-sm font-medium leading-none flex flex-col mb-3">
+            Total feet:
+            <span className="text-3xl font-bold mt-2">{quote.feet}ft</span>
+          </p>
+          <p className="text-sm font-medium leading-none flex flex-col mb-3">
+            Gate:
+            <span className="text-3xl font-bold mt-2">
+              {quote.singleGate ? "Single" : "Double"}
+            </span>
+          </p>
+        </div>
+      </CardContent>
+      <CardFooter>
+        <p className="text-sm font-medium leading-none">
+          Our team will contact you soon!
+        </p>
+      </CardFooter>
+    </Card>
   );
 }

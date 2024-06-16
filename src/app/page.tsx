@@ -27,7 +27,7 @@ export default function Component() {
     <>
       <Header />
       <div className="flex flex-col">
-        <div className="flex flex-col md:flex-row my-10 ml-6 gap-10">
+        <div className="flex flex-col md:flex-row my-10 m-6 gap-10">
           <QuoteProgress />
           <ProjectDetails
             isActive={activeComponent === "ProjectDetails"}

@@ -34,10 +34,10 @@ function ProjectDetails(props: StepDetails) {
   }
 
   return (
-    <div className="col-span-2 rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+    <div className="col-span-2 mx-auto rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
       <h2 className="text-2xl font-bold">Step 1: Project Details</h2>
       <p className="mt-2 text-gray-500 dark:text-gray-400">
-        Please provide the details of your project to get an accurate quote.
+        Please provide your details so we can reach you.
       </p>
       <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div>

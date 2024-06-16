@@ -80,7 +80,7 @@ export default function OptionSelection(props: StepDetails) {
   }
 
   return (
-    <section className="w-full py-12 md:py-16 lg:py-20">
+    <section className="w-full">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col gap-8 md:gap-12 lg:gap-16">
           <div className="flex flex-col gap-4 md:gap-6 lg:gap-8">
@@ -99,7 +99,7 @@ export default function OptionSelection(props: StepDetails) {
             <div className="flex justify-around">
               {materials.map((material) => (
                 <Card
-                  className={`w-[350px] m-2 ${
+                  className={`w-[200px] m-2 ${
                     selectedMaterial?.id === material.id
                       ? "border-2 border-blue-500"
                       : ""
@@ -127,7 +127,7 @@ export default function OptionSelection(props: StepDetails) {
                   {selectedMaterial.styles.map((style) => (
                     <Card
                       key={style.id}
-                      className={`w-[350px] m-2 ${
+                      className={`w-[200px] m-2 ${
                         selectedStyle === style.id
                           ? "border-2 border-blue-500"
                           : ""
@@ -163,7 +163,7 @@ export default function OptionSelection(props: StepDetails) {
                     ?.colors.map((color) => (
                       <Card
                         key={color.id}
-                        className={`w-[350px] m-2 ${
+                        className={`w-[200px] m-2 ${
                           selectedColor === color.id
                             ? "border-2 border-blue-500"
                             : ""
@@ -200,7 +200,7 @@ export default function OptionSelection(props: StepDetails) {
                     ?.heights.map((height) => (
                       <Card
                         key={height.id}
-                        className={`w-[350px] m-2 ${
+                        className={`w-[200px] m-2 ${
                           selectedHeight === height.id
                             ? "border-2 border-blue-500"
                             : ""
@@ -230,8 +230,8 @@ export default function OptionSelection(props: StepDetails) {
             <Button className="w-full sm:w-auto" variant="outline">
               Previous Step
             </Button>
-            <Button className="w-full sm:w-auto" onClick={handleNextStep}>
-              Next Step
+            <Button className="w-full bg-blue-500 sm:w-auto" onClick={handleNextStep}>
+              Get your Quote
             </Button>
           </div>
         </div>
