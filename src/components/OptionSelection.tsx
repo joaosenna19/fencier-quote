@@ -5,23 +5,8 @@ import { Card, CardContent, CardTitle, CardHeader } from "./ui/card";
 import Image from "next/image";
 import { createQuote } from "@/apiFunctions/create-quote";
 import { IncomingQuote } from "@/apiFunctions/create-quote";
-
-interface Material {
-  id: string;
-  name: string;
-  styles: {
-    id: string;
-    name: string;
-    colors: {
-      id: string;
-      name: string;
-      heights: {
-        id: string;
-        feet: string;
-      }[];
-    }[];
-  }[];
-}
+import { Material } from "@/interfaces/material";
+import { fetchMaterials } from "@/apiFunctions/fetchMaterials";
 
 export default function OptionSelection(props: StepDetails) {
   const [materials, setMaterials] = useState<Material[]>([]);
@@ -31,26 +16,16 @@ export default function OptionSelection(props: StepDetails) {
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedHeight, setSelectedHeight] = useState<string | null>(null);
+  
 
   useEffect(() => {
-    const fetchMaterials = async () => {
-      try {
-        const response = await fetch(
-          "https://fencier-api.onrender.com/material"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch materials");
-        }
-        const data = await response.json();
-        setMaterials(data);
-        console.log("Materials:", data);
-      } catch (error) {
-        console.error("Error fetching materials:", error);
-      }
-    };
-
-    fetchMaterials();
-  }, []);
+    const data = fetchMaterials();
+    data.then((materials) => {
+      setMaterials(materials);
+    });
+      
+    }, []);
+  
 
   const isActive = props.isActive;
 
@@ -76,13 +51,13 @@ export default function OptionSelection(props: StepDetails) {
     setSelectedHeight(heightId);
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     if (selectedMaterial && selectedStyle && selectedColor && selectedHeight) {
       const [userInfo, addressInfo, details] = props.quote;
       const tenantId = "aa815619-4db7-4b79-a33f-9b51426db757";
       const quote: IncomingQuote = [userInfo, addressInfo, details];
-
-      createQuote(
+      console.log("Quote", "I'm here");
+      const createdQuote = await createQuote(
         quote,
         selectedMaterial.id,
         selectedStyle,
@@ -90,7 +65,10 @@ export default function OptionSelection(props: StepDetails) {
         selectedHeight,
         tenantId
       );
-    } else {
+      props.onQuote(createdQuote);
+      console.log("Created Quote", createdQuote);
+      props.onClickNext("QuoteSummary");
+      } else {
       console.error(
         "All selections must be made before proceeding to the next step."
       );
@@ -102,7 +80,7 @@ export default function OptionSelection(props: StepDetails) {
   }
 
   return (
-    <section className="w-full py-12 md:py-16 lg:py-20">
+    <section className="w-full">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col gap-8 md:gap-12 lg:gap-16">
           <div className="flex flex-col gap-4 md:gap-6 lg:gap-8">
@@ -121,7 +99,7 @@ export default function OptionSelection(props: StepDetails) {
             <div className="flex justify-around">
               {materials.map((material) => (
                 <Card
-                  className={`w-[350px] m-2 ${
+                  className={`w-[200px] m-2 ${
                     selectedMaterial?.id === material.id
                       ? "border-2 border-blue-500"
                       : ""
@@ -149,7 +127,7 @@ export default function OptionSelection(props: StepDetails) {
                   {selectedMaterial.styles.map((style) => (
                     <Card
                       key={style.id}
-                      className={`w-[350px] m-2 ${
+                      className={`w-[200px] m-2 ${
                         selectedStyle === style.id
                           ? "border-2 border-blue-500"
                           : ""
@@ -185,7 +163,7 @@ export default function OptionSelection(props: StepDetails) {
                     ?.colors.map((color) => (
                       <Card
                         key={color.id}
-                        className={`w-[350px] m-2 ${
+                        className={`w-[200px] m-2 ${
                           selectedColor === color.id
                             ? "border-2 border-blue-500"
                             : ""
@@ -222,7 +200,7 @@ export default function OptionSelection(props: StepDetails) {
                     ?.heights.map((height) => (
                       <Card
                         key={height.id}
-                        className={`w-[350px] m-2 ${
+                        className={`w-[200px] m-2 ${
                           selectedHeight === height.id
                             ? "border-2 border-blue-500"
                             : ""
@@ -252,8 +230,8 @@ export default function OptionSelection(props: StepDetails) {
             <Button className="w-full sm:w-auto" variant="outline">
               Previous Step
             </Button>
-            <Button className="w-full sm:w-auto" onClick={handleNextStep}>
-              Next Step
+            <Button className="w-full bg-blue-500 sm:w-auto" onClick={handleNextStep}>
+              Get your Quote
             </Button>
           </div>
         </div>

@@ -8,8 +8,8 @@ function QuoteProgress(
 ) {
 
   return (
-    <div className="rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <h2 className="text-2xl font-bold">Quote Progress - UNDER CONSTRUCTION</h2>
+    <div className="rounded-lg  border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+            <h2 className="text-2xl font-bold">Quote Progress</h2>
             <p className="mt-2 text-gray-500 dark:text-gray-400">Track your quote generation progress.</p>
             <div className="mt-6 space-y-4">
               <QuoteStep 
@@ -28,12 +28,12 @@ function QuoteProgress(
               isCompleted = {false}
               />
               <QuoteStep 
-              stepName='Choose your Style' 
+              stepName='Choose your Materials' 
               isActive = {false}
               isCompleted = {false}
               />
               <QuoteStep 
-              stepName='Anything Else?' 
+              stepName='Summary' 
               isActive = {false}
               isCompleted = {false}
               />
