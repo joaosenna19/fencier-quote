@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import DetailItem from "@/components/DetailItem";
 
 interface QuoteSummaryProps {
   quote: any;
@@ -15,32 +16,50 @@ interface QuoteSummaryProps {
 export default function QuoteSummary(props: QuoteSummaryProps) {
   const { quote, isActive } = props;
 
+  const address =
+    quote?.customerInfo?.address[0].street +
+    ", " +
+    quote?.customerInfo?.address[0].city +
+    ", " +
+    quote?.customerInfo?.address[0].province +
+    ", " +
+    quote?.customerInfo?.address[0].postalCode;
+
   if (!isActive) {
     return null;
   }
 
   return (
-    <Card className="col-span-2 w-full rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+    <Card className="col-span-2  mx-auto rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
       <CardHeader className="">
         <CardTitle>Your Quote Summary</CardTitle>
-        <CardDescription>Here are the details of your quote</CardDescription>
+        <CardDescription>
+          {quote?.customerInfo.firstName}, here are the details of your quote:
+        </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 ">
-        <div className=" flex rounded-md border p-4 flex-col">
-          <p className="text-sm font-medium leading-none flex flex-col mb-3">
-            Final price:
-            <span className="text-3xl font-bold mt-2">${quote.finalPrice}</span>
-          </p>
-          <p className="text-sm font-medium leading-none flex flex-col mb-3">
-            Total feet:
-            <span className="text-3xl font-bold mt-2">{quote.feet}ft</span>
-          </p>
-          <p className="text-sm font-medium leading-none flex flex-col mb-3">
-            Gate:
-            <span className="text-3xl font-bold mt-2">
-              {quote.singleGate ? "Single" : "Double"}
-            </span>
-          </p>
+        <div className="flex flex-row justify-between ">
+          <div className="flex flex-col">
+            <DetailItem label="Final price:" value={`$${quote?.finalPrice}`} />
+            <DetailItem label="Total feet:" value={`${quote?.feet}ft`} />
+            <DetailItem label="Email:" value={quote?.customerInfo.email} />
+            <DetailItem
+              label="Phone Number:"
+              value={quote?.customerInfo.phoneNumber}
+            />
+            <DetailItem label="Address" value={address} />
+          </div>
+          <div className="flex flex-col">
+            <DetailItem label="Material" value={quote?.material.name} />
+            <DetailItem label="Style" value={quote?.style.name} />
+            <DetailItem label="Color" value={quote?.color.name} />
+            <DetailItem label="Height" value={quote?.height} />
+
+            <DetailItem
+              label="Gate:"
+              value={quote.singleGate ? "Single" : "Double"}
+            />
+          </div>
         </div>
       </CardContent>
       <CardFooter>
