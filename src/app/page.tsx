@@ -26,8 +26,8 @@ export default function Component() {
   return (
     <>
       <Header />
-      <div className="flex flex-col">
-        <div className="flex flex-col md:flex-row my-10 m-6 gap-10">
+      <div className="flex flex-col ">
+        <div className="flex flex-col md:flex-row my-10 m-6 gap-10 justify-evenly">
           <QuoteProgress step={activeComponent}/>
           <ProjectDetails
             isActive={activeComponent === "ProjectDetails"}
