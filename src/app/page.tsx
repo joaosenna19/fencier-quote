@@ -10,7 +10,7 @@ import GoogleMaps from "@/components/GoogleMaps";
 import QuoteSummary from "@/components/QuoteSummary";
 
 export default function Component() {
-  const [activeComponent, setActiveComponent] = useState("ProjectDetails");
+  const [activeComponent, setActiveComponent] = useState<string>("ProjectDetails");
 
   const handleNext = (nextStep: string) => {
     setActiveComponent(nextStep);
@@ -26,9 +26,9 @@ export default function Component() {
   return (
     <>
       <Header />
-      <div className="flex flex-col">
-        <div className="flex flex-col md:flex-row my-10 m-6 gap-10">
-          <QuoteProgress />
+      <div className="flex flex-col ">
+        <div className="flex flex-col md:flex-row my-10 m-6 gap-10 justify-evenly">
+          <QuoteProgress step={activeComponent}/>
           <ProjectDetails
             isActive={activeComponent === "ProjectDetails"}
             onClickNext={handleNext}
