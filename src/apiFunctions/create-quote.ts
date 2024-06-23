@@ -55,7 +55,7 @@ export async function createQuote(
 
   try {
     const response = await fetch(
-      `https://fencier-api.onrender.com/quote?tenantId=${tenantId}`,
+      `${process.env.NEXT_PUBLIC_FENCIER_API_URL}/quote?tenantId=${tenantId}`,
       {
         method: "POST",
         headers: {
