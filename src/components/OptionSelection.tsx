@@ -16,16 +16,13 @@ export default function OptionSelection(props: StepDetails) {
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedHeight, setSelectedHeight] = useState<string | null>(null);
-  
 
   useEffect(() => {
     const data = fetchMaterials();
     data.then((materials) => {
       setMaterials(materials);
     });
-      
-    }, []);
-  
+  }, []);
 
   const isActive = props.isActive;
 
@@ -68,7 +65,7 @@ export default function OptionSelection(props: StepDetails) {
       props.onQuote(createdQuote);
       console.log("Created Quote", createdQuote);
       props.onClickNext("QuoteSummary");
-      } else {
+    } else {
       console.error(
         "All selections must be made before proceeding to the next step."
       );
@@ -113,7 +110,12 @@ export default function OptionSelection(props: StepDetails) {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex justify-center">
-                    <Image src="/images.png" alt="" width="100" height="50" />
+                    <Image
+                      src={material.imageUrl}
+                      alt=""
+                      width="100"
+                      height="50"
+                    />
                   </CardContent>
                 </Card>
               ))}
@@ -141,7 +143,7 @@ export default function OptionSelection(props: StepDetails) {
                       </CardHeader>
                       <CardContent className="flex justify-center">
                         <Image
-                          src="/images.png"
+                          src={style.imageUrl}
                           alt=""
                           width="100"
                           height="50"
@@ -172,7 +174,7 @@ export default function OptionSelection(props: StepDetails) {
                       >
                         <CardHeader>
                           <CardTitle className="text-center">
-                            {color.name}
+                            {color.imageUrl}
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="flex justify-center">
@@ -214,7 +216,7 @@ export default function OptionSelection(props: StepDetails) {
                         </CardHeader>
                         <CardContent className="flex justify-center">
                           <Image
-                            src="/images.png"
+                            src={height.imageUrl}
                             alt=""
                             width="100"
                             height="50"
@@ -230,7 +232,10 @@ export default function OptionSelection(props: StepDetails) {
             <Button className="w-full sm:w-auto" variant="outline">
               Previous Step
             </Button>
-            <Button className="w-full bg-blue-500 sm:w-auto" onClick={handleNextStep}>
+            <Button
+              className="w-full bg-blue-500 sm:w-auto"
+              onClick={handleNextStep}
+            >
               Get your Quote
             </Button>
           </div>
