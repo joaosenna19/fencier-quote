@@ -174,12 +174,12 @@ export default function OptionSelection(props: StepDetails) {
                       >
                         <CardHeader>
                           <CardTitle className="text-center">
-                            {color.imageUrl}
+                            {color.name}
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="flex justify-center">
                           <Image
-                            src="/images.png"
+                            src={color.imageUrl}
                             alt=""
                             width="100"
                             height="50"

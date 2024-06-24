@@ -1,8 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ['fencierriofence.s3.amazonaws.com'],
-    },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "fencierriofence.s3.amazonaws.com",
+        port: "",
+        pathname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
