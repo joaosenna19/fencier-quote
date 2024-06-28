@@ -23,8 +23,10 @@ export default function Component() {
     console.log("I'm here", JSON.stringify(quote));
   };
 
+
   return (
     <>
+    
       <Header />
       <div className="flex flex-col ">
         <div className="flex flex-col md:flex-row my-10 m-6 gap-10 justify-evenly">
