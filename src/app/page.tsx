@@ -4,7 +4,7 @@ import QuoteProgress from "@/components/QuoteProgress";
 import Header from "@/components/Header";
 import React, { useState } from "react";
 import ProjectDetails from "@/components/ProjectDetails";
-import MaterialSelection from "@/components/OptionSelection";
+import MaterialSelection from "@/components/MaterialSelection";
 import SearchAddress from "@/components/SearchAddress";
 import GoogleMaps from "@/components/GoogleMaps";
 import QuoteSummary from "@/components/QuoteSummary";
