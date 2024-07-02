@@ -7,6 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import DetailItem from "@/components/DetailItem";
+import {
+  formatPhoneNumber,
+  formatPostalCode,
+} from "@/functions/formattingFunctions";
 
 interface QuoteSummaryProps {
   quote: any;
@@ -23,7 +27,7 @@ export default function QuoteSummary(props: QuoteSummaryProps) {
     ", " +
     quote?.customerInfo?.address[0].province +
     ", " +
-    quote?.customerInfo?.address[0].postalCode;
+    formatPostalCode(quote?.customerInfo?.address[0].postalCode);
 
   if (!isActive) {
     return null;
@@ -45,7 +49,7 @@ export default function QuoteSummary(props: QuoteSummaryProps) {
             <DetailItem label="Email:" value={quote?.customerInfo.email} />
             <DetailItem
               label="Phone Number:"
-              value={quote?.customerInfo.phoneNumber}
+              value={formatPhoneNumber(quote?.customerInfo.phoneNumber)}
             />
             <DetailItem label="Address" value={address} />
           </div>
