@@ -17,3 +17,21 @@ export function formatPostalCode(postalCode: string) {
   }
   return postalCode;
 }
+
+export const metersToFeet = (meters: number): number => {
+  return meters * 3.28084;
+};
+
+export const parseAddress = (address: string) => {
+  const addressParts = address.split(", ");
+  const streetParts = addressParts[0].split(" ");
+  const provinceZip = addressParts[2].split(" ");
+
+  return {
+    streetName: addressParts[0],
+    city: addressParts[1],
+    province: provinceZip[0],
+    postalCode: provinceZip.slice(1).join(" "),
+    country: addressParts[3],
+  };
+};

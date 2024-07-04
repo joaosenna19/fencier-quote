@@ -20,7 +20,7 @@ function ProjectDetails(props: StepDetails) {
 
   const onSubmit: SubmitHandler<CustomerDetails> = (data) => {
     props.onQuote([data]);
-    props.onClickNext("SearchAddress");
+    props.onClickNext("GoogleMaps");
   };
 
   const { register, handleSubmit, formState } = useForm<CustomerDetails>({

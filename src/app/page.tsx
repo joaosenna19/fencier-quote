@@ -5,12 +5,12 @@ import Header from "@/components/Header";
 import React, { useState } from "react";
 import ProjectDetails from "@/components/ProjectDetails";
 import MaterialSelection from "@/components/MaterialSelection";
-import SearchAddress from "@/components/SearchAddress";
 import GoogleMaps from "@/components/GoogleMaps";
 import QuoteSummary from "@/components/QuoteSummary";
 
 export default function Component() {
-  const [activeComponent, setActiveComponent] = useState<string>("ProjectDetails");
+  const [activeComponent, setActiveComponent] =
+    useState<string>("ProjectDetails");
 
   const handleNext = (nextStep: string) => {
     setActiveComponent(nextStep);
@@ -23,22 +23,14 @@ export default function Component() {
     console.log("I'm here", JSON.stringify(quote));
   };
 
-
   return (
     <>
-    
       <Header />
       <div className="flex flex-col ">
         <div className="flex flex-col md:flex-row my-10 m-6 gap-10 justify-evenly">
-          <QuoteProgress step={activeComponent}/>
+          <QuoteProgress step={activeComponent} />
           <ProjectDetails
             isActive={activeComponent === "ProjectDetails"}
-            onClickNext={handleNext}
-            quote={quote}
-            onQuote={handleQuote}
-          />
-          <SearchAddress
-            isActive={activeComponent === "SearchAddress"}
             onClickNext={handleNext}
             quote={quote}
             onQuote={handleQuote}
