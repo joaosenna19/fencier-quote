@@ -19,6 +19,7 @@ function ProjectDetails(props: StepDetails) {
   type CustomerDetails = zod.infer<typeof customerDetailsSchema>;
 
   const onSubmit: SubmitHandler<CustomerDetails> = (data) => {
+    localStorage.clear();
     props.onQuote([data]);
     props.onClickNext("GoogleMaps");
   };

@@ -12,6 +12,7 @@ import PlaceAutocomplete from "@/components/PlaceAutocomplete";
 import DrawingManagerWrapper from "@/components/DrawingManagerWrapper";
 import { Button } from "@/components/ui/button";
 import { parseAddress } from "@/utils/utils";
+import { useToast } from "@/components/ui/use-toast";
 
 const Map = dynamic(
   () => import("@vis.gl/react-google-maps").then((mod) => mod.Map),
@@ -31,6 +32,7 @@ function GoogleMaps(props: StepDetails) {
   const [finalLength, setFinalLength] = useState<number | null>(null);
   const [isDone, setIsDone] = useState<boolean>(false);
   const shapesRef = useRef<(google.maps.Polyline | google.maps.Polygon)[]>([]);
+  const { toast } = useToast();
 
   const isActive = props.isActive;
 
@@ -45,8 +47,16 @@ function GoogleMaps(props: StepDetails) {
   };
 
   const handleDone = () => {
-    setFinalLength(totalPolylineLength);
-    setIsDone(true);
+    if (!localStorage.getItem("selectedAddress")) {
+      toast({
+        title: "No address selected",
+        description: "Please select an address before proceeding",
+        variant: "destructive",
+      });
+    } else {
+      setFinalLength(totalPolylineLength);
+      setIsDone(true);
+    }
   };
 
   const handleNextStep = () => {
@@ -102,7 +112,7 @@ function GoogleMaps(props: StepDetails) {
         {totalPolylineLength > 0 && (
           <div className="mt-2">
             <p className="text-lg font-bold">
-              Total Length: {totalPolylineLength.toFixed(2)} m
+              Total Length: {totalPolylineLength.toFixed(2)}ft
             </p>
           </div>
         )}
