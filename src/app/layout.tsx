@@ -1,17 +1,18 @@
-import { Arimo } from 'next/font/google'
-import { Libre_Franklin } from 'next/font/google'
+import { Arimo } from "next/font/google";
+import { Libre_Franklin } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const arimo = Arimo({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-arimo',
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-arimo",
+});
 const libre_franklin = Libre_Franklin({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-libre_franklin',
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-libre_franklin",
+});
 
 export default function Layout({
   children,
@@ -20,9 +21,10 @@ export default function Layout({
 }>) {
   return (
     <html lang="en">
-      <body className={arimo.variable + ' ' + libre_franklin.variable}>
+      <body className={arimo.variable + " " + libre_franklin.variable}>
         {children}
+        <Toaster />
       </body>
     </html>
-  )
+  );
 }

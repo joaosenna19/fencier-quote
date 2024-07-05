@@ -10,7 +10,7 @@ import DetailItem from "@/components/DetailItem";
 import {
   formatPhoneNumber,
   formatPostalCode,
-} from "@/functions/formattingFunctions";
+} from "@/utils/utils";
 
 interface QuoteSummaryProps {
   quote: any;
