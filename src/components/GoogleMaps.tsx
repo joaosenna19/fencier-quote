@@ -31,6 +31,7 @@ function GoogleMaps(props: StepDetails) {
   const [totalPolylineLength, setTotalPolylineLength] = useState<number>(0);
   const [finalLength, setFinalLength] = useState<number | null>(null);
   const [isDone, setIsDone] = useState<boolean>(false);
+  const [shouldClearShapes, setShouldClearShapes] = useState<boolean>(false);
   const shapesRef = useRef<(google.maps.Polyline | google.maps.Polygon)[]>([]);
   const { toast } = useToast();
 
@@ -44,6 +45,7 @@ function GoogleMaps(props: StepDetails) {
     shapesRef.current.forEach((shape) => shape.setMap(null));
     shapesRef.current = [];
     setTotalPolylineLength(0);
+    setShouldClearShapes(true);
   };
 
   const handleDone = () => {
@@ -99,6 +101,8 @@ function GoogleMaps(props: StepDetails) {
           <DrawingManagerWrapper
             setTotalPolylineLength={setTotalPolylineLength}
             shapesRef={shapesRef}
+            shouldClearShapes={shouldClearShapes}
+            onClearShapesHandled={() => setShouldClearShapes(false)}
           />
         </Map>
 
