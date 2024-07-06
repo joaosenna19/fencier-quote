@@ -7,14 +7,25 @@ interface DrawingManagerWrapperProps {
   shapesRef: React.MutableRefObject<
     (google.maps.Polyline | google.maps.Polygon)[]
   >;
+  shouldClearShapes: boolean;
+  onClearShapesHandled: () => void;
 }
 
 const DrawingManagerWrapper: React.FC<DrawingManagerWrapperProps> = ({
   setTotalPolylineLength,
   shapesRef,
+  shouldClearShapes,
+  onClearShapesHandled,
 }) => {
   const drawingManager = useDrawingManager();
   const [localTotalLength, setLocalTotalLength] = useState(0);
+
+  useEffect(() => {
+    if (shouldClearShapes) {
+      setLocalTotalLength(0);
+      onClearShapesHandled();
+    }
+  }, [shouldClearShapes, onClearShapesHandled]);
 
   useEffect(() => {
     if (drawingManager) {
