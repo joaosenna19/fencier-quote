@@ -5,6 +5,8 @@ import { createQuote, IncomingQuote } from "@/apiFunctions/create-quote";
 import { Material } from "@/interfaces/material";
 import { fetchMaterials } from "@/apiFunctions/fetchMaterials";
 import SelectionSection from "./SelectionSection";
+import { Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function MaterialSelection(props: StepDetails) {
   const [materials, setMaterials] = useState<Material[]>([]);
@@ -14,6 +16,8 @@ export default function MaterialSelection(props: StepDetails) {
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedHeight, setSelectedHeight] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const data = fetchMaterials();
@@ -47,6 +51,7 @@ export default function MaterialSelection(props: StepDetails) {
   };
 
   const handleNextStep = async () => {
+    setIsLoading(true);
     if (selectedMaterial && selectedStyle && selectedColor && selectedHeight) {
       const [userInfo, addressInfo, details] = props.quote;
       const tenantId = "aa815619-4db7-4b79-a33f-9b51426db757";
@@ -61,10 +66,14 @@ export default function MaterialSelection(props: StepDetails) {
       );
       props.onQuote(createdQuote);
       props.onClickNext("QuoteSummary");
+      setIsLoading(false);
     } else {
-      console.error(
-        "All selections must be made before proceeding to the next step."
-      );
+      toast({
+        title: "Incomplete Selection",
+        description: "Please select all the options before proceeding",
+        variant: "destructive",
+      });
+      setIsLoading(false);
     }
   };
 
@@ -152,7 +161,8 @@ export default function MaterialSelection(props: StepDetails) {
               className="w-full bg-blue-500 sm:w-auto"
               onClick={handleNextStep}
             >
-              Get your Quote
+              {isLoading && <Loader2 className="mr-2 animate-spin" size={16} />}
+              {isLoading ? "Generating..." : "Get your quote"}
             </Button>
           </div>
         </div>
