@@ -160,6 +160,7 @@ export default function MaterialSelection(props: StepDetails) {
             <Button
               className="w-full bg-blue-500 sm:w-auto"
               onClick={handleNextStep}
+              disabled={isLoading}
             >
               {isLoading && <Loader2 className="mr-2 animate-spin" size={16} />}
               {isLoading ? "Generating..." : "Get your quote"}
