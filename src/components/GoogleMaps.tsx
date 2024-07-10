@@ -23,7 +23,7 @@ const MapControl = dynamic(
   { ssr: false }
 );
 
-function GoogleMaps(props: StepDetails) {
+export default function GoogleMaps(props: StepDetails) {
   const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
   const [selectedPlace, setSelectedPlace] =
     useState<google.maps.places.PlaceResult | null>(null);
@@ -62,15 +62,34 @@ function GoogleMaps(props: StepDetails) {
   };
 
   const handleNextStep = () => {
-    const address = localStorage.getItem("selectedAddress");
-    const parsedAddress = address ? parseAddress(address) : {};
+    const address = parseAddress(localStorage.getItem("selectedAddress") ?? "");
+    if (!address) {
+      toast({
+        title: "No address selected",
+        description: "Please select an address before proceeding",
+        variant: "destructive",
+      });
+    } else {
+      props.onQuote([
+        ...props.quote,
+        address,
+        { length: finalLength, singleGate: true },
+      ]);
+      setIsDone(false);
+      clearShapes();
+      props.onClickNext("MaterialSelection");
+    }
+  };
 
-    props.onQuote([
-      ...props.quote,
-      parsedAddress,
-      { length: finalLength, singleGate: true },
-    ]);
-    props.onClickNext("MaterialSelection");
+  const handleStepBack = () => {
+    if (props.onBack) {
+      clearShapes();
+      setIsDone(false);
+      props.onQuote(
+        props.quote.slice(0, 0).filter((item) => Object.keys(item).length !== 0)
+      );
+      props.onBack("PersonalDetails");
+    }
   };
 
   const hasShapes = shapesRef.current.length > 0;
@@ -138,7 +157,11 @@ function GoogleMaps(props: StepDetails) {
       </div>
       {isDone && (
         <div className="flex justify-between">
-          <Button className="w-full sm:w-auto" variant="outline">
+          <Button
+            className="w-full sm:w-auto"
+            variant="outline"
+            onClick={handleStepBack}
+          >
             Previous Step
           </Button>
           <Button className="ml-auto" onClick={handleNextStep}>
@@ -149,5 +172,3 @@ function GoogleMaps(props: StepDetails) {
     </div>
   );
 }
-
-export default GoogleMaps;

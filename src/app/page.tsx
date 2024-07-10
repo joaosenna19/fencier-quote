@@ -3,14 +3,14 @@
 import QuoteProgress from "@/components/QuoteProgress";
 import Header from "@/components/Header";
 import React, { useState } from "react";
-import ProjectDetails from "@/components/ProjectDetails";
+import PersonalDetails from "@/components/PersonalDetails";
 import MaterialSelection from "@/components/MaterialSelection";
 import GoogleMaps from "@/components/GoogleMaps";
 import QuoteSummary from "@/components/QuoteSummary";
 
 export default function Component() {
   const [activeComponent, setActiveComponent] =
-    useState<string>("ProjectDetails");
+    useState<string>("PersonalDetails");
 
   const handleNext = (nextStep: string) => {
     setActiveComponent(nextStep);
@@ -20,7 +20,12 @@ export default function Component() {
 
   const handleQuote = (quote: any) => {
     setQuote(quote);
-    console.log("I'm here", JSON.stringify(quote));
+    console.log("Going forward:", JSON.stringify(quote));
+  };
+
+  const handleBack = (previousStep: string) => {
+    setActiveComponent(previousStep);
+    console.log("Step Back", JSON.stringify(quote));
   };
 
   return (
@@ -29,8 +34,8 @@ export default function Component() {
       <div className="flex flex-col ">
         <div className="flex flex-col md:flex-row my-10 m-6 gap-10 justify-evenly">
           <QuoteProgress step={activeComponent} />
-          <ProjectDetails
-            isActive={activeComponent === "ProjectDetails"}
+          <PersonalDetails
+            isActive={activeComponent === "PersonalDetails"}
             onClickNext={handleNext}
             quote={quote}
             onQuote={handleQuote}
@@ -40,12 +45,14 @@ export default function Component() {
             onClickNext={handleNext}
             quote={quote}
             onQuote={handleQuote}
+            onBack={handleBack}
           />
           <MaterialSelection
             isActive={activeComponent === "MaterialSelection"}
             onClickNext={handleNext}
             quote={quote}
             onQuote={handleQuote}
+            onBack={handleBack}
           />
           <QuoteSummary
             isActive={activeComponent === "QuoteSummary"}
