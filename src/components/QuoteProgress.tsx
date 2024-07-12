@@ -6,7 +6,7 @@ interface QuoteProgressProps {
 }
 function QuoteProgress({ step }: QuoteProgressProps) {
   const steps = [
-    { name: "Contact Information", component: "ProjectDetails" },
+    { name: "Contact Information", component: "PersonalDetails" },
     { name: "Draw your Fence", component: "GoogleMaps" },
     { name: "Choose your Materials", component: "MaterialSelection" },
     { name: "Summary", component: "QuoteSummary" },

@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StepDetails } from "@/interfaces/step-details";
 
-function ProjectDetails(props: StepDetails) {
+function PersonalDetails(props: StepDetails) {
   const customerDetailsSchema = zod.object({
     firstName: zod.string().min(2, { message: "First name is mandatory" }),
     lastName: zod
@@ -21,6 +21,7 @@ function ProjectDetails(props: StepDetails) {
   const onSubmit: SubmitHandler<CustomerDetails> = (data) => {
     localStorage.clear();
     props.onQuote([data]);
+    localStorage.clear();
     props.onClickNext("GoogleMaps");
   };
 
@@ -92,9 +93,6 @@ function ProjectDetails(props: StepDetails) {
         </div>
 
         <div className="flex justify-between">
-          <Button className="w-full sm:w-auto" variant="outline">
-            Previous Step
-          </Button>
           <Button className="ml-auto">Next Step</Button>
         </div>
       </form>
@@ -102,4 +100,4 @@ function ProjectDetails(props: StepDetails) {
   );
 }
 
-export default ProjectDetails;
+export default PersonalDetails;

@@ -64,9 +64,10 @@ export default function MaterialSelection(props: StepDetails) {
         selectedHeight,
         tenantId
       );
+      setIsLoading(false);
       props.onQuote(createdQuote);
       props.onClickNext("QuoteSummary");
-      setIsLoading(false);
+      
     } else {
       toast({
         title: "Incomplete Selection",
@@ -74,6 +75,17 @@ export default function MaterialSelection(props: StepDetails) {
         variant: "destructive",
       });
       setIsLoading(false);
+    }
+  };
+
+  const handleStepBack = () => {
+    if (props.onBack) {
+      localStorage.removeItem("selectedAddress");
+      const updatedQuote = props.quote
+        .slice(0, -2)
+        .filter((item) => Object.keys(item).length !== 0);
+      props.onQuote(updatedQuote);
+      props.onBack("GoogleMaps");
     }
   };
 
@@ -154,7 +166,11 @@ export default function MaterialSelection(props: StepDetails) {
             />
           )}
           <div className="flex justify-between">
-            <Button className="w-full sm:w-auto" variant="outline">
+            <Button
+              className="w-full sm:w-auto"
+              variant="outline"
+              onClick={handleStepBack}
+            >
               Previous Step
             </Button>
             <Button
