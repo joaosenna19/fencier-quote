@@ -20,12 +20,10 @@ export default function Component() {
 
   const handleQuote = (quote: any) => {
     setQuote(quote);
-    console.log("Going forward:", JSON.stringify(quote));
   };
 
   const handleBack = (previousStep: string) => {
     setActiveComponent(previousStep);
-    console.log("Step Back", JSON.stringify(quote));
   };
 
   return (
