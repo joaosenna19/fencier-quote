@@ -140,7 +140,7 @@ export default function GoogleMaps(props: StepDetails) {
           </div>
         )}
       </APIProvider>
-      <div className="mt-2">
+      <div className="mt-2 flex justify-end">
         {!isDone && hasShapes && (
           <Button onClick={clearShapes} variant="destructive" className="mr-2">
             Clear Drawings
@@ -157,18 +157,18 @@ export default function GoogleMaps(props: StepDetails) {
       </div>
       {isDone && (
         <div className="flex justify-between">
-          <Button
-            className="w-full sm:w-auto"
-            variant="outline"
-            onClick={handleStepBack}
-          >
-            Previous Step
-          </Button>
           <Button className="ml-auto" onClick={handleNextStep}>
             Next Step
           </Button>
         </div>
       )}
+      <Button
+        className="w-full sm:w-auto mt-1"
+        variant="outline"
+        onClick={handleStepBack}
+      >
+        Previous Step
+      </Button>
     </div>
   );
 }
