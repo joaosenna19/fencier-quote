@@ -13,6 +13,8 @@ import DrawingManagerWrapper from "@/components/DrawingManagerWrapper";
 import { Button } from "@/components/ui/button";
 import { parseAddress } from "@/utils/utils";
 import { useToast } from "@/components/ui/use-toast";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const Map = dynamic(
   () => import("@vis.gl/react-google-maps").then((mod) => mod.Map),
@@ -33,6 +35,7 @@ export default function GoogleMaps(props: StepDetails) {
   const [isDone, setIsDone] = useState<boolean>(false);
   const [shouldClearShapes, setShouldClearShapes] = useState<boolean>(false);
   const shapesRef = useRef<(google.maps.Polyline | google.maps.Polygon)[]>([]);
+  const [doubleGate, setDoubleGate] = useState<boolean>(false);
   const { toast } = useToast();
 
   const isActive = props.isActive;
@@ -46,6 +49,11 @@ export default function GoogleMaps(props: StepDetails) {
     shapesRef.current = [];
     setTotalPolylineLength(0);
     setShouldClearShapes(true);
+  };
+
+  const handleSwitchChange = (checked: boolean) => {
+    setDoubleGate(checked);
+    console.log("Double Gate: ", checked);
   };
 
   const handleDone = () => {
@@ -73,7 +81,7 @@ export default function GoogleMaps(props: StepDetails) {
       props.onQuote([
         ...props.quote,
         address,
-        { length: finalLength, singleGate: true },
+        { length: finalLength, singleGate: doubleGate ? false : true },
       ]);
       setIsDone(false);
       clearShapes();
@@ -133,10 +141,17 @@ export default function GoogleMaps(props: StepDetails) {
         <MapControl position={ControlPosition.TOP}></MapControl>
         <MapHandler place={selectedPlace} marker={marker} />
         {totalPolylineLength > 0 && (
-          <div className="mt-2">
+          <div className="mt-2 flex flex-col">
             <p className="text-lg font-bold">
               Total Length: {totalPolylineLength.toFixed(2)}ft
             </p>
+            <div className="flex items-center space-x-2 mt-1">
+              <Switch
+                checked={doubleGate}
+                onCheckedChange={handleSwitchChange}
+              />
+              <Label htmlFor="">Double Gate</Label>
+            </div>
           </div>
         )}
       </APIProvider>
