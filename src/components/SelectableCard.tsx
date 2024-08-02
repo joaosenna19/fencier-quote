@@ -16,7 +16,7 @@ const SelectableCard: React.FC<SelectableCardProps> = ({ id, name, imageUrl, isS
       onClick={() => onSelect(id)}
     >
       <CardHeader>
-        <CardTitle className="text-center">{name}</CardTitle>
+        <CardTitle className="text-center whitespace-normal break-words">{name}</CardTitle>
       </CardHeader>
       <CardContent className="flex justify-center">
         <Image src={imageUrl} alt={name} width="100" height="50" />
